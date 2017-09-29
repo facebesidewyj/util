@@ -4,6 +4,42 @@
  */
 var util = {
     /**
+     * 元素类型判断
+     * @param  {Obejct} obj  传入的对象
+     * @param  {String} type 传入的类型
+     * @return {Boolean}     返回的布尔结果
+     */
+    newTypeof: function(obj, type) {
+        if (typeof type === "string") {
+            switch (type.toLowerCase()) {
+                case "string":
+                    return typeof obj === "string";
+                case "number":
+                    return Object.prototype.toString.call(o) === "[object Number]";
+                case "boolean":
+                    return typeof obj === "boolean";
+                case "undefined":
+                    return typeof obj === "undefined";
+                case "null":
+                    return Object.prototype.toString.call(o) === "[object Null]";
+                case "function":
+                    return typeof obj === "function";
+                case "array":
+                    return Array.isArray(obj);
+                case "object":
+                    return Object.prototype.toString.call(o) === "[object Object]";
+                case "nan":
+                    return isNaN(obj);
+                case "elements":
+                    return Object.prototype.toString.call(o).indexOf("html") !== -1;
+                default:
+                    throw "No such type!";
+            }
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
      * 字符串去空格
      * @param  {String} str  传入的目标字符串
      * @param  {Number} type 选择去空格的类型：1为去除所有空格、2为去除前后空格、
@@ -11,7 +47,7 @@ var util = {
      * @return {String}      返回结果字符串
      */
     trim: function(str, type) {
-        if (typeof str === "string" && typeof type === "number") {
+        if (this.newTypeof(str, "string") && this.newTypeof(type, "number")) {
             switch (type) {
                 case 1:
                     return str.replace(/\s+/g, "");
@@ -35,7 +71,7 @@ var util = {
      * @return {String}       循环之后的字符串
      */
     repeatStr: function(str, count) {
-        if (typeof str === "string" && typeof count === "number") {
+        if (this.newTypeof(str, "string") && this.newTypeof(count, "number")) {
             var text = "";
             for (var i = 0; i < count; i++) {
                 text = text + str;
@@ -51,7 +87,7 @@ var util = {
      * @return {String}     返回转换好的字符串
      */
     toggleCase: function(str) {
-        if (typeof str === "string") {
+        if (this.newTypeof(str, "string")) {
             var strArr = str.split("");
             var resStr = "";
             strArr.forEach(function(item) {
@@ -69,13 +105,13 @@ var util = {
         }
     },
     /**
-     * 查找相应字符串的位置
+     * 统计字符串出现的次数
      * @param  {String} str    传入的字符串
      * @param  {String} subStr 要查找的字符串
-     * @return {String}        返回要查找的字符串首字符的位置
+     * @return {String}        返回字符串出现的次数
      */
-    searchStr: function(str, subStr) {
-        if (typeof str === "string" && typeof subStr === "string") {
+    countStr: function(str, subStr) {
+        if (this.newTypeof(str, "string") && this.newTypeof(subStr, "string")) {
             return str.split(subStr).length - 1;
         } else {
             throw "Incorrect Parameter Type！";
@@ -88,7 +124,7 @@ var util = {
      * @return {Boolean}     返回的布尔值
      */
     checkParametersType: function(str, type) {
-        if (typeof str === "string" && typeof type === "string") {
+        if (this.newTypeof(str, "string") && this.newTypeof(type, "string")) {
             switch (type) {
                 case "phone":
                     return /^1[3|4|5|7|8][0-9]{9}$/.test(str);
@@ -130,7 +166,7 @@ var util = {
      * @return {Number}     返回的强度等级（最高为4级）
      */
     checkPasswordLevel: function(str) {
-        if (typeof str === "string") {
+        if (this.newTypeof(str, "string")) {
             var level = 0;
             if (str.length < 5) {
                 return level;
@@ -193,13 +229,28 @@ var util = {
     minInArray: function(arr) {
         if (Array.isArray(arr)) {
             var res = arr.every(function(item, index, arr) {
-                return typeof item === "number";
+                return this.newTypeof(item, "number");
             });
             if (res) {
                 return Math.min.apply(null, arr);
             } else {
                 throw "Not a digital array!";
             }
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
+     * 删除数组中的指定元素
+     * @param  {Array}  arr 传入要删除的数组
+     * @param  {Object} val 要删除的元素
+     * @return {Array}      返回删除元素之后的数组
+     */
+    removeValueForArray: function(arr, val) {
+        if (Array.isArray(arr)) {
+            arr.filter(function(item, index, arr) {
+                return item !== val;
+            });
         } else {
             throw "Incorrect Parameter Type！";
         }
@@ -272,4 +323,93 @@ var util = {
         }
         return temp;
     },
+    /**
+     * 获得随机的颜色值
+     * @return {String} 返回随机的颜色字符串
+     */
+    getRandomColor: function() {
+        return "#" + Math.random().toString(16).substring(2).substr(0, 6);
+    },
+    /**
+     * 返回指定范围的随机数
+     * @param  {Number} num1 传入的范围的最小值
+     * @param  {Number} num2 传入的范围的最大值
+     * @return {Number}      返回的随机数
+     */
+    getRandomNumber: function(num1, num2) {
+        if (this.newTypeof(num1, "number") && this.newTypeof(num2, "number")) {
+            return Math.round(n1 + Math.random() * (n2 - n1));
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
+     * 判断一个对象是否含有某个class名
+     * @param  {Object}  obj       传入的Dom对象
+     * @param  {String}  className 样式名
+     * @return {Boolean}           含有返回true
+     */
+    hasClass: function(obj, className) {
+        if (this.newTypeof(obj, "elements") && typeof className === "string") {
+            if (this.trim(obj.className, 1) !== "") {
+                var arr = obj.className.split(/\s+/);
+                return arr.indexOf(className) !== -1;
+            } else {
+                return false;
+            }
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
+     * 添加类名操作
+     * @param {Object} obj       传入的Dom对象
+     * @param {String} className 类名
+     */
+    addClass: function(obj, className) {
+        if (this.newTypeof(obj, "elements") && this.newTypeof(className, "string")) {
+            if (!this.hasClass(obj, className)) {
+                obj.className += " " + className;
+            }
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
+     * 移除类名
+     * @param  {Object} obj       传入的Dom对象
+     * @param  {String} className 传入要删除的类名
+     */
+    removeClass: function(obj, className) {
+        if (this.newTypeof(obj, "elements") && this.newTypeof(className, "string")) {
+            if (this.hasClass(obj, className)) {
+                var reg = new RegExp("(\\s+|^)" + className + "(\\s+|$)");
+                obj.className.replace(reg, "");
+            }
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
+     * 隐藏
+     * @param  {Object} obj 传入的Dom对象
+     */
+    hide: function(obj) {
+        if (this.newTypeof(obj, "elements")) {
+            obj.style.display = "none";
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    },
+    /**
+     * 显示
+     * @param  {Object} obj 传入的Dom对象
+     */
+    show: function(obj) {
+        if (this.newTypeof(obj, "elements")) {
+            obj.style.display = "";
+        } else {
+            throw "Incorrect Parameter Type！";
+        }
+    }
 };
