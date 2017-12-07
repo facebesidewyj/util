@@ -1,7 +1,6 @@
 # JavaScript工具库
 
-在学习JS的过程中，自己手动实现了一些常用的小功能，方便我们平时的开发，现在把这个项目开源出来，供大家学习，共同进步。
-语法标准：ECMASript5。
+在学习JS的过程中，自己手动实现了一些常用的小功能，方便我们平时的开发，现在把这个项目开源出来，供大家学习，共同进步。 语法标准：ECMASript5。
 
 > 本项目供学习使用，如有必要使用到生产项目中，请做好测试。由于本人水平有限，很多地方没有考虑周到，难免会出现Bug，请多多见谅！
 
@@ -13,6 +12,12 @@
   <dt><a href="#newTypeof">newTypeof(obj, type)</a> ⇒ <code>Boolean</code></dt>
   <dd>
   <p>元素类型判断</p>
+</dd>
+  <dt>
+  <a href="#shallowCopy">shallowCopy(obj, res)</a>
+</dt>
+  <dd>
+  <p>对象浅复制</p>
 </dd>
   <dt><a href="#trim">trim(str, type)</a> ⇒ <code>String</code></dt>
   <dd>
@@ -98,6 +103,12 @@
   <dd>
   <p>显示</p>
 </dd>
+  <dt>
+  <a href="#getJson">getJson(options)</a>
+</dt>
+  <dd>
+  <p>封装ajax</p>
+</dd>
 </dl>
 
 []()
@@ -115,6 +126,19 @@ type  | `String` | 传入的类型
 
 []()
 
+## shallowCopy(obj, res)
+
+对象浅复制
+
+**Kind**: global function
+
+Param | Type     | Description
+----- | -------- | -----------
+obj   | `Obejct` | 被复制的对象
+res   | `Obejct` | 目标对象
+
+[]()
+
 ## trim(str, type) ⇒ `String`
 
 字符串去空格
@@ -122,13 +146,11 @@ type  | `String` | 传入的类型
 **Kind**: global function **Returns**: `String` - 返回结果字符串
 
 Param | Type     | Description
------ | -------- | ---------------------------
+----- | -------- | ---------------------
 str   | `String` | 传入的目标字符串
-type  | `Number` | 选择去空格的类型：1为去除所有空格、2为去除前后空格、
+type  | `Number` | 选择去空格的类型：1为去除所有空格、2为去
 
-```
-                 3为去除前空格、4为去除后空格 |
-```
+除前后空格、 3为去除前空格、4为去除后空格 |
 
 []()
 
@@ -177,9 +199,11 @@ subStr | `String` | 要查找的字符串
 **Kind**: global function **Returns**: `Boolean` - 返回的布尔值
 
 Param | Type     | Description
------ | -------- | ------------------------------
+----- | -------- | -----------------------------
 str   | `String` | 传入的字符串
-type  | `String` | 要符合的类型，例如phone，email，IDcard15等
+type  | `String` | 要符合的类型，例如phone，email，IDcard15
+
+等 |
 
 []()
 
@@ -251,10 +275,10 @@ val   | `Object` | 要删除的元素
 **Kind**: global function **Returns**: `String` - 返回格式化好的字符串
 
 Param | Type   | Description
------ | ------ | ---------------------------
-date  | `Date` | 要格式化的日期，不传时默认当前时间，也可以是一个时间戳
+----- | ------ | ---------------------
+date  | `Date` | 要格式化的日期，不传时默认当前时间，也可以
 
-| fmt | `String` | 目标字符串格式，支持的字符有：y,M,d,q,w,H,h,m,S， 默认：yyyy-MM-dd HH:mm:ss |
+是一个时间戳 | | fmt | `String` | 目标字符串格式，支持的字符有：y,M,d,q,w,H, h,m,S， 默认：yyyy-MM-dd HH:mm:ss |
 
 []()
 
@@ -349,3 +373,15 @@ obj   | `Object` | 传入的Dom对象
 Param | Type     | Description
 ----- | -------- | -----------
 obj   | `Object` | 传入的Dom对象
+
+[]()
+
+## getJson(options)
+
+封装ajax
+
+**Kind**: global function
+
+Param   | Type     | Description
+------- | -------- | -----------
+options | `Object` | 传入封装数据的对象
