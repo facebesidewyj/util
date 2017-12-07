@@ -289,8 +289,8 @@ date  | `Date` | 要格式化的日期，不传时默认当前时间，也可以
 **Kind**: global function **Returns**: `String` - 返回日期的友好格式显示
 
 Param | Type   | Description
------ | ------ | --------------
-date  | `Date` | 传入的日期，可以为空和时间戳
+----- | ------ | -----------
+date  | `Date` | 传入的日期的时间戳
 
 []()
 

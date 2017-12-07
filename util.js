@@ -318,24 +318,38 @@ var util = {
 	},
 	/**
 	 * 将日期转换成友好格式显示
-	 * @param  {Date} date   传入的日期，可以为空和时间戳
+	 * @param  {Number} date   传入的日期的时间戳
 	 * @return {String}      返回日期的友好格式显示
 	 */
 	formatDateToFriendly: function(date) {
-		date = typeof date === "undefined" ? new Date() : date;
-		date = typeof date === "number" ? new Date(date) : date;
-		var now = new Date();
-		if ((now.getTime() - date.getTime()) < 60 * 1000) {
-			return "刚刚";
+		var endTime = typeof date === "number" ? date : date.getTime();
+		var startTime = new Date().getTime();
+		var time = endTime - startTime;
+		var day = parseInt(time / (60 * 60 * 24 * 1000));
+		var hour = parseInt(time / (60 * 60 * 1000));
+		var min = parseInt(time / (60 * 1000));
+		var month = parseInt(day / 30);
+		var year = parseInt(month / 12);
+		if (year) {
+			if (year > 2) {
+				return this.formatDate(endTime, 'yyyy-MM-dd');
+			} else {
+				return year + '年前';
+			}
 		}
-		var temp = this.formatDate(date, "yyyy年M月d");
-		if (temp == this.formatDate(now, "yyyy年M月d")) {
-			return this.formatDate(date, "HH:mm");
+		if (month) {
+			return month + '个月前';
 		}
-		if (date.getFullYear() == now.getFullYear()) {
-			return this.formatDate(date, 'M月d日');
+		if (day) {
+			return day + '天前';
 		}
-		return temp;
+		if (hour) {
+			return hour + '个小时前';
+		}
+		if (min) {
+			return min + '分钟前';
+		}
+		return '刚刚';
 	},
 	/**
 	 * 获得随机的颜色值
