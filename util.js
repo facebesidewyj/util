@@ -117,7 +117,7 @@ var util = {
 		} else {
 			throw "Incorrect Parameter Type！";
 		}
-	},
+	}, 
 	/**
 	 * 统计字符串出现的次数
 	 * @param  {String} str    传入的字符串
